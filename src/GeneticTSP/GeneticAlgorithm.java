@@ -1,5 +1,6 @@
 package GeneticTSP;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Random;
  **/
 public class GeneticAlgorithm {
     //开始遗传
-    SpeciesNode run(SpeciesList list) {
+    SpeciesNode run(SpeciesList list, ArrayList<String> outdata) {
         //创建初始种群
         createBeginningSpecies(list);
 
@@ -24,8 +25,12 @@ public class GeneticAlgorithm {
             mutate(list);
 
             //打印本次迭代信息
-            System.out.println("迭代" + i +"次: ");
-            getBest(list).printRate();
+            System.out.println("* Iterating " + i + " times: ");
+            SpeciesNode thisBest = getBest(list);
+            thisBest.printRate();
+
+            //保存本次迭代信息到文件
+            outdata.add(i+" "+thisBest.distance);
         }
 
         return getBest(list);
@@ -88,7 +93,7 @@ public class GeneticAlgorithm {
 
         //将最大适应度物种复制talentNum个
         SpeciesList newSpeciesList = new SpeciesList();
-        int talentNum = (int) (list.speciesNum / 4);
+        int talentNum = (int) (list.speciesNum * Constant.TALENT_RESERVE_RATE);
         for (int i = 1; i <= talentNum; i++) {
             //复制物种至新表
             SpeciesNode newSpecies = talentSpecies.clone();
