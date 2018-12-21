@@ -11,7 +11,7 @@ public class Constant {
 
     static int CITY_NUM;                    // 城市数
     static final int SPECIES_NUM = 200;       // 种群大小
-    static final int DEVELOP_NUM = 2000;       // 进化代数
+    static final int DEVELOP_NUM = 500;       // 进化代数
     static final float pcl = 0.6f, pch = 0.95f;  // 交叉概率
     static final float pm = 0.4f;             // 变异概率
     static final float[][] disMap;          // 地图数据

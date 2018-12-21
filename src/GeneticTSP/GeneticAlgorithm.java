@@ -36,7 +36,8 @@ public class GeneticAlgorithm {
         int randomNum = Constant.SPECIES_NUM;
         for (int i = 1; i <= randomNum; i++) {
             SpeciesNode species = new SpeciesNode();//创建结点
-            species.createByRandomGenes();//初始种群基因
+//            species.createByRandomGenes();//初始种群基因
+            species.createByGreedyGenes();
 
             list.add(species);//添加物种
         }
