@@ -13,12 +13,12 @@ public class Constant {
     static final float[][] disMap;                      // 地图数据
 
     static final int SPECIES_NUM = 200;                 // 种群大小
-    static final int DEVELOP_NUM = 2000;                 // 进化代数
+    static final int DEVELOP_NUM = 1000;                 // 进化代数
     static final float pcl = 0.6f, pch = 0.95f;         // 交叉概率
     static final float pm = 0.4f;                       // 变异概率
     static final float TALENT_RESERVE_RATE = 0.25f;     //精英复制的个数占种群数量的比例
 
-    static final int EPOCHS = 5;                        // 程序运行次数，取平均
+    static final int EPOCHS = 1;                        // 程序运行次数，取平均
 
     static final String OUT_FILE = ".\\data\\1.txt";     //输出文件路径
 

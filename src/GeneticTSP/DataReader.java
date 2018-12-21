@@ -13,6 +13,7 @@ public class DataReader {
         ArrayList<Position> cityPosition = new ArrayList<>();
         // 读取文件并初始化cityPosition
         File dataFile = new File(".\\data\\kroA100.txt");
+//        File dataFile = new File(".\\data\\city42.txt");
         if (dataFile.isFile() && dataFile.exists()) {
             try {
                 InputStreamReader reader = new InputStreamReader(new FileInputStream(dataFile));
