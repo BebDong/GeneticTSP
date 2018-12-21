@@ -9,9 +9,9 @@ public class SpeciesList {
     SpeciesNode head;//头结点
     int speciesNum;//种群大小
 
-    SpeciesList() {
-        head = new SpeciesNode();
-        speciesNum = Constant.SPECIES_NUM;
+    SpeciesList(int speciesNum) {
+        this.head = new SpeciesNode();
+        this.speciesNum = speciesNum;
     }
 
     //添加物种

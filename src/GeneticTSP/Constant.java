@@ -3,7 +3,7 @@ package GeneticTSP;
 import java.util.ArrayList;
 
 /**
- * Description: 参数定义
+ * Description: 初始化操作
  * Author: Quan Tang
  * Date: 2018/12/20
  **/
@@ -11,21 +11,14 @@ public class Constant {
 
     static int CITY_NUM;                                // 城市数
     static final float[][] disMap;                      // 地图数据
-
-    static final int SPECIES_NUM = 200;                 // 种群大小
-    static final int DEVELOP_NUM = 1000;                 // 进化代数
-    static final float pcl = 0.6f, pch = 0.95f;         // 交叉概率
-    static final float pm = 0.4f;                       // 变异概率
-    static final float TALENT_RESERVE_RATE = 0.25f;     //精英复制的个数占种群数量的比例
-
     static final int EPOCHS = 1;                        // 程序运行次数，取平均
 
-    static final String OUT_FILE = ".\\data\\1.txt";     //输出文件路径
+    static final String dataFile = ".\\data\\kroA100.txt";  //数据集
+    static final String paramFile = ".\\data\\param.txt";    //运行参数文件
 
     static {
         //城市坐标集合
-        ArrayList<Position> cityPosition = DataReader.readData();
-
+        ArrayList<Position> cityPosition = DataReader.readData(dataFile);
         //路径集合
         CITY_NUM = cityPosition.size();
         disMap = new float[CITY_NUM][CITY_NUM];

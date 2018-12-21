@@ -9,12 +9,20 @@ import java.util.Random;
  * Date: 2018/12/20
  **/
 public class GeneticAlgorithm {
+    //遗传算法参数
+    Parameter parameter;
+
+    //构造器
+    public GeneticAlgorithm(Parameter parameter) {
+        this.parameter = parameter;
+    }
+
     //开始遗传
     SpeciesNode run(SpeciesList list, ArrayList<String> outdata) {
         //创建初始种群
         createBeginningSpecies(list);
 
-        for (int i = 1; i <= Constant.DEVELOP_NUM; i++) {
+        for (int i = 1; i <= this.parameter.getDevelopNum(); i++) {
             //选择
             select(list);
 
@@ -30,7 +38,7 @@ public class GeneticAlgorithm {
             thisBest.printRate();
 
             //保存本次迭代信息到文件
-            outdata.add(i+" "+thisBest.distance);
+            outdata.add(i + " " + thisBest.distance);
         }
 
         return getBest(list);
@@ -38,7 +46,7 @@ public class GeneticAlgorithm {
 
     //随机创建初始种群
     void createBeginningSpecies(SpeciesList list) {
-        int randomNum = Constant.SPECIES_NUM;
+        int randomNum = this.parameter.getSpeciesNum();
         for (int i = 1; i <= randomNum; i++) {
             SpeciesNode species = new SpeciesNode();//创建结点
 //            species.createByRandomGenes();//初始种群基因
@@ -92,8 +100,8 @@ public class GeneticAlgorithm {
         }
 
         //将最大适应度物种复制talentNum个
-        SpeciesList newSpeciesList = new SpeciesList();
-        int talentNum = (int) (list.speciesNum * Constant.TALENT_RESERVE_RATE);
+        SpeciesList newSpeciesList = new SpeciesList(this.parameter.getSpeciesNum());
+        int talentNum = (int) (list.speciesNum * this.parameter.getTalentReserveRate());
         for (int i = 1; i <= talentNum; i++) {
             //复制物种至新表
             SpeciesNode newSpecies = talentSpecies.clone();
@@ -136,7 +144,7 @@ public class GeneticAlgorithm {
     void crossover(SpeciesList list) {
         //以概率pcl~pch进行
         float rate = (float) Math.random();
-        if (rate > Constant.pcl && rate < Constant.pch) {
+        if (rate <= this.parameter.getPc()) {
             SpeciesNode point = list.head.next;//游标
             Random rand = new Random();
             int find = rand.nextInt(list.speciesNum);
@@ -177,7 +185,7 @@ public class GeneticAlgorithm {
         SpeciesNode point = list.head.next;
         while (point != null) {
             float rate = (float) Math.random();
-            if (rate < Constant.pm) {
+            if (rate < this.parameter.getPm()) {
                 //寻找逆转左右端点
                 Random rand = new Random();
                 int left = rand.nextInt(Constant.CITY_NUM);
