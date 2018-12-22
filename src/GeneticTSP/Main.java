@@ -22,6 +22,9 @@ public class Main {
         //从参数文件读入参数
         ArrayList<Parameter> parameters = DataReader.readParameter(Constant.paramFile);
 
+        //记录每组参数运行epoch次的平均值结果
+        ArrayList<String> allAvgResults=new ArrayList<>();
+
         //每一种参数配置执行遗传算法
         Iterator<Parameter> iterator = parameters.iterator();
         while (iterator.hasNext()) {
@@ -69,9 +72,12 @@ public class Main {
                 System.out.println("# Shortest distance in each epoch: ");
                 System.out.println("In epoch " + i + ": " + results.get(i));
             }
+            float avg=sum / results.size();
             System.out.println("# Average shortest distance: ");
-            System.out.println(sum / results.size());
-            outData.add("avg: " + sum / results.size());
+            System.out.println(avg);
+            outData.add("avg: " + avg);
+            //记录本组参数的均值
+            allAvgResults.add(avg+"");
 
             //结束时间
             long endTime = System.currentTimeMillis();
@@ -85,6 +91,13 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        //将所有组参数运行的平均结果保存到文件
+        Path outFile = Paths.get(Constant.avgResultsFile);
+        try {
+            Files.write(outFile, allAvgResults, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

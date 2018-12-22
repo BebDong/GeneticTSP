@@ -13,8 +13,9 @@ public class Constant {
     static final float[][] disMap;                      // 地图数据
     static final int EPOCHS = 1;                        // 程序运行次数，取平均
 
-    static final String dataFile = ".\\data\\kroA100.txt";  //数据集
+    static final String dataFile = ".\\data\\kroA100.txt";   //数据集
     static final String paramFile = ".\\data\\param.txt";    //运行参数文件
+    static final String avgResultsFile = ".\\data\\avg_results.txt";   //保存每组参数运行的平均结果
 
     static {
         //城市坐标集合
