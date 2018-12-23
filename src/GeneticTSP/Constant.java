@@ -23,7 +23,7 @@ public class Constant {
 
     static {
         //城市坐标集合
-        ArrayList<Position> cityPosition = DataReader.readData(dataFile);
+        ArrayList<Position> cityPosition = Utils.readData(dataFile);
         //路径集合
         CITY_NUM = cityPosition.size();
         disMap = new float[CITY_NUM][CITY_NUM];

@@ -111,20 +111,6 @@ public class SpeciesNode {
         return species;
     }
 
-    //2-opt扰动
-    public void twoOpt(int beginPoint, int endPoint){
-        if (beginPoint>=endPoint)
-            return;
-        String[] genesTemp = this.genes;
-        while (beginPoint<endPoint){
-            String temp=genesTemp[beginPoint];
-            genesTemp[beginPoint]=genesTemp[endPoint];
-            genesTemp[endPoint]=temp;
-            beginPoint ++;
-            endPoint --;
-        }
-    }
-
     //打印路径
     void printRate() {
         System.out.print("Shortest path: ");

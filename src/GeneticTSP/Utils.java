@@ -2,13 +2,14 @@ package GeneticTSP;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
- * Description: 读取数据集文件
+ * Description: 工具类
  * Author: Quan Tang
- * Date: 2018/12/20
+ * Date: 2018/12/23
  **/
-public class DataReader {
+public class Utils {
     //读取数据文件
     public static ArrayList<Position> readData(String filePath) {
         ArrayList<Position> cityPosition = new ArrayList<>();
@@ -76,4 +77,10 @@ public class DataReader {
         return parameter;
     }
 
+    //生成指定范围内的随机数
+    public static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
 }

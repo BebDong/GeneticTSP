@@ -46,17 +46,13 @@ public class GeneticAlgorithm {
             outdata.add(i + " " + thisBest.distance);
 
             //判断是否进行2-opt扰动
-            if (Math.abs(oldBest-thisBest.distance)<Constant.DISTURB_THRESHOLD){
+            if (Math.abs(oldBest - thisBest.distance) < Constant.DISTURB_THRESHOLD) {
                 epochNumForOpt++;
-                if (epochNumForOpt>Constant.DISTURB_DEVELOP){
+                if (epochNumForOpt > Constant.DISTURB_DEVELOP) {
                     //进行扰动
-                    SpeciesNode point = list.head;
-                    while (point.next != null){
-                        point.twoOpt(randInt(0,Constant.CITY_NUM-1),randInt(0,Constant.CITY_NUM-1));
-                        point = point.next;
-                    }
+                    twoOpt(list);
                 }
-            }else{
+            } else {
                 epochNumForOpt = 0;
             }
             oldBest = thisBest.distance;
@@ -65,11 +61,25 @@ public class GeneticAlgorithm {
         return getBest(list);
     }
 
-    //生成指定范围内的随机数
-    private static int randInt(int min, int max) {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
+    //进行2-opt扰动
+    void twoOpt(SpeciesList list) {
+        SpeciesNode point = list.head;
+        while (point.next != null) {
+            int beginPoint = Utils.randInt(0, Constant.CITY_NUM - 1);
+            int endPoint = Utils.randInt(0, Constant.CITY_NUM - 1);
+            if (beginPoint >= endPoint)
+                continue;
+            String[] genesTemp = point.genes;
+            while (beginPoint < endPoint) {
+                String temp = genesTemp[beginPoint];
+                genesTemp[beginPoint] = genesTemp[endPoint];
+                genesTemp[endPoint] = temp;
+                beginPoint++;
+                endPoint--;
+            }
+            point.genes = genesTemp;
+            point = point.next;
+        }
     }
 
     //随机创建初始种群
@@ -77,8 +87,8 @@ public class GeneticAlgorithm {
         int randomNum = this.parameter.getSpeciesNum();
         for (int i = 1; i <= randomNum; i++) {
             SpeciesNode species = new SpeciesNode();//创建结点
-            species.createByRandomGenes();//初始种群基因
-//            species.createByGreedyGenes();
+//            species.createByRandomGenes();//初始种群基因
+            species.createByGreedyGenes();
 
             list.add(species);//添加物种
         }
