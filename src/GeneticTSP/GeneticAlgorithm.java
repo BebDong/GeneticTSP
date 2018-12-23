@@ -22,6 +22,11 @@ public class GeneticAlgorithm {
         //创建初始种群
         createBeginningSpecies(list);
 
+        //记录前一个种群最优值
+        float oldBest = 9999999.0f;
+        //记录迭代次数判断是否2-opt扰动
+        int epochNumForOpt = 0;
+
         for (int i = 1; i <= this.parameter.getDevelopNum(); i++) {
             //选择
             select(list);
@@ -39,9 +44,32 @@ public class GeneticAlgorithm {
 
             //保存本次迭代信息到文件
             outdata.add(i + " " + thisBest.distance);
+
+            //判断是否进行2-opt扰动
+            if (Math.abs(oldBest-thisBest.distance)<Constant.DISTURB_THRESHOLD){
+                epochNumForOpt++;
+                if (epochNumForOpt>Constant.DISTURB_DEVELOP){
+                    //进行扰动
+                    SpeciesNode point = list.head;
+                    while (point.next != null){
+                        point.twoOpt(randInt(0,Constant.CITY_NUM-1),randInt(0,Constant.CITY_NUM-1));
+                        point = point.next;
+                    }
+                }
+            }else{
+                epochNumForOpt = 0;
+            }
+            oldBest = thisBest.distance;
         }
 
         return getBest(list);
+    }
+
+    //生成指定范围内的随机数
+    private static int randInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
     }
 
     //随机创建初始种群
@@ -49,8 +77,8 @@ public class GeneticAlgorithm {
         int randomNum = this.parameter.getSpeciesNum();
         for (int i = 1; i <= randomNum; i++) {
             SpeciesNode species = new SpeciesNode();//创建结点
-//            species.createByRandomGenes();//初始种群基因
-            species.createByGreedyGenes();
+            species.createByRandomGenes();//初始种群基因
+//            species.createByGreedyGenes();
 
             list.add(species);//添加物种
         }
