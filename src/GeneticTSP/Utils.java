@@ -83,4 +83,13 @@ public class Utils {
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
     }
+
+    //获取一个基因对应的路径
+    public static String getPath(String[] genes){
+        String path="";
+        for (int i = 0; i < genes.length; i++)
+            path += (genes[i] + "->");
+        path +=(genes[0] + "\n");
+        return path;
+    }
 }

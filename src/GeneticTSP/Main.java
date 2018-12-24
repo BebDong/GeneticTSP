@@ -40,8 +40,12 @@ public class Main {
             outData.add("TALENT_RESERVE_RATE: " + thisParam.getTalentReserveRate());
             outData.add("EPOCHS: " + Constant.EPOCHS);
 
-            //记录每次运行的最优解，最后取平均
+            //记录每次epoch的解，最后取平均
             ArrayList<Float> results = new ArrayList<>();
+            //每组参数epoch次的最优值和路径
+            float bestPerEpoch=999999.0f;
+            String bestPath="";
+
 
             // 同一参数运行多次求平均值
             for (int epoch = 0; epoch < Constant.EPOCHS; epoch++) {
@@ -63,6 +67,13 @@ public class Main {
 
                 //记录本次收敛结果
                 results.add(bestRate.distance);
+
+                //每组参数迭代epoch次最小的解
+                if (bestRate.distance<bestPerEpoch){
+                    bestPerEpoch=bestRate.distance;
+                    bestPath+=Utils.getPath(bestRate.genes);
+                }
+
             }
 
             //求解均值
@@ -84,10 +95,18 @@ public class Main {
             System.out.println("# Time cost: " + (endTime - startTime) / 1000.0);
             outData.add("time: " + (endTime - startTime) / 1000.0);
 
-            //写入文件
+            //每组参数结果写入文件
             Path outFile = Paths.get(".\\data\\" + thisParam.getSerialNumber() + ".txt");
             try {
                 Files.write(outFile, outData, Charset.forName("UTF-8"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //本组参数的最优值写入文件
+            Path outFileBest = Paths.get(".\\data\\" + thisParam.getSerialNumber() + "_best.txt");
+            try {
+                Files.write(outFileBest,(bestPerEpoch+"\n"+bestPath).getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             }
