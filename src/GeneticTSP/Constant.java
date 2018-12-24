@@ -17,6 +17,9 @@ public class Constant {
     static final int DISTURB_DEVELOP=100;
     static final float DISTURB_THRESHOLD=10.0f;
 
+    static final boolean OPT_ON=false;       // 2-opt开关，默认关闭
+    static final boolean RANDOM_INIT_POPULATION=true;     //初始化种群时随机或贪婪，默认随机
+
     static final String dataFile = ".\\data\\kroA100.txt";   //数据集
     static final String paramFile = ".\\data\\param.txt";    //运行参数文件
     static final String avgResultsFile = ".\\data\\avg_results.txt";   //保存每组参数运行的平均结果

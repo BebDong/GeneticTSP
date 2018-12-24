@@ -46,6 +46,9 @@ public class GeneticAlgorithm {
             outdata.add(i + " " + thisBest.distance);
 
             //判断是否进行2-opt扰动
+            if(!Constant.OPT_ON){
+                continue;
+            }
             if (Math.abs(oldBest - thisBest.distance) < Constant.DISTURB_THRESHOLD) {
                 epochNumForOpt++;
                 if (epochNumForOpt > Constant.DISTURB_DEVELOP) {
@@ -87,9 +90,11 @@ public class GeneticAlgorithm {
         int randomNum = this.parameter.getSpeciesNum();
         for (int i = 1; i <= randomNum; i++) {
             SpeciesNode species = new SpeciesNode();//创建结点
-//            species.createByRandomGenes();//初始种群基因
-            species.createByGreedyGenes();
-
+            if(Constant.RANDOM_INIT_POPULATION){
+                species.createByRandomGenes();    //随机初始种群基因
+            }else {
+                species.createByGreedyGenes();    //贪婪初始种群基因
+            }
             list.add(species);//添加物种
         }
     }
