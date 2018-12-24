@@ -44,7 +44,7 @@ public class Main {
             ArrayList<Float> results = new ArrayList<>();
             //每组参数epoch次的最优值和路径
             float bestPerEpoch=999999.0f;
-            String bestPath="";
+            String bestPath=null;
 
 
             // 同一参数运行多次求平均值
@@ -71,7 +71,7 @@ public class Main {
                 //每组参数迭代epoch次最小的解
                 if (bestRate.distance<bestPerEpoch){
                     bestPerEpoch=bestRate.distance;
-                    bestPath+=Utils.getPath(bestRate.genes);
+                    bestPath=Utils.getPath(bestRate.genes);
                 }
 
             }
